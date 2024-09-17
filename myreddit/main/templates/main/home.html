@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if title %}
+<h1 class='text-center mt-2'>{{ title }}</h1>
+{% endif %}
+
+{% if posts %}
+{% for post in posts %}
+{% include "main/includes/post.html" %}
+{% endfor %}
+{% else %}
+<h1>Постов не найдено</h1>
+{% endif %}
+
+{% endblock content %}

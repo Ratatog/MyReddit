@@ -1,0 +1,39 @@
+from django.db import models
+
+
+class Group(models.Model):
+    title = models.CharField(max_length=35, verbose_name='Название', unique=True)
+    description = models.CharField(max_length=200, blank=True, null=True, default=None, verbose_name='Описание')
+    photo = models.ImageField(upload_to="main/group/%Y/%m/%d/", blank=True, null=True, verbose_name='Фото')
+    admin = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name='Админ', related_name='group')
+
+class Post(models.Model):
+    text = models.CharField(max_length=50, verbose_name='Текст')
+    likes = models.IntegerField(default=0, verbose_name='Лайки')
+    group = models.ForeignKey("main.Group", on_delete=models.CASCADE, null=True, default=None, verbose_name='Группа', related_name='post')
+    create_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', null=True)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name='Пользователь', related_name='post')
+    tags = models.CharField(max_length=300, verbose_name='Теги', null=True, default=None)
+    
+    class Meta:
+        ordering = ['-create_date']
+        indexes = [
+            models.Index(fields=['text', '-likes', 'group', '-create_date'])
+        ]
+
+class Image(models.Model):
+    img = models.ImageField(upload_to="main/post/%Y/%m/%d/", blank=True, null=True, verbose_name='Фото')
+    post = models.ForeignKey("main.Post", null=True, blank=True, on_delete=models.CASCADE, verbose_name='Картинка', related_name='img')
+    
+class Comment(models.Model):
+    text = models.CharField(max_length=300, verbose_name='Текст')
+    likes = models.IntegerField(default=0, verbose_name='Лайки')
+    post = models.ForeignKey("main.Post", on_delete=models.CASCADE, verbose_name='Картинка', related_name='comment', null=True)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name='Пользователь', related_name='comment', null=True)
+    create_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', null=True)
+    
+    class Meta:
+        ordering = ['-create_date']
+        indexes = [
+            models.Index(fields=['-likes'])
+        ]
