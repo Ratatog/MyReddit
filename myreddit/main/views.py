@@ -15,6 +15,7 @@ def temp(r): return render(r, 'main/home.html')
 class Home(LoginMixn, ListView):
     template_name = 'main/home.html'
     context_object_name = 'posts'
+    extra_context = {'title': 'Home'}
 
     def get_queryset(self):
         return Post.objects.all()
