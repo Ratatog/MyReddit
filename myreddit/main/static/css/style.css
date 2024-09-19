@@ -277,3 +277,48 @@ a {
     border-bottom: none;
     margin-bottom: 0px;
 }
+
+.group-header {
+    margin: auto;
+    background-color: #222f35;
+    padding: 30px;
+    border-radius: 30px;
+}
+.g-h-top {
+    display: flex;
+}
+.group-photo img {
+    width: 80px;
+    margin-right: 30px;
+}
+.g-h-top {
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+}
+.g-h-top, .group-header span {
+    margin-top: auto;
+    font-size: 170%;
+}
+.g-h-bottom span {
+    font-size: 120%;
+}
+.group-main {
+    display: flex;
+}
+.group-posts {
+    width: 85%;
+}
+.group-posts .post {
+    width: 85%;
+}
+.group-side {
+    background-color: #0a1616;
+    border-radius: 30px;
+    padding: 15px;
+    width: 15%;
+    /* position: fixed;
+    right: 0;
+    height: 20px;
+    margin-right: 10vw; */
+}

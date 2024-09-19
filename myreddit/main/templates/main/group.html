@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="group">
+    <div class="group-header">
+        <div class='g-h-top'>
+            <div class="group-photo">
+                <img src="{{ group.photo.url }}">
+            </div>
+            <span>{{ group.title }}</span>
+        </div>
+        <div class='g-h-bottom'>
+            <div class="group-description">
+                <span>{{group.description}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="group-main">
+        <div class="group-posts">
+            {% for post in posts %}
+            {% include "main/includes/post.html" %}
+            {% endfor %}
+        </div>
+        <div class="group-side">
+            <div class="admin">
+                <span>Admin: {{group.admin.username}}</span>
+            </div>
+            <div class="members">
+                <span>Members: {{group.groups.count}}</span>
+                <div class="list-members">
+                    {% for member in group.groups.all %}
+                    {{ member.username }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
