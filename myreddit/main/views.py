@@ -1,16 +1,30 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Post, Image
+from .models import Post, Image, Comment
 from .forms import CommentForm, AddPostForm
 from .utils import LoginMixn
 
 
-def temp(r): return render(r, 'main/home.html')
+def LikePostView(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    if post.likes.filter(username=request.user.username):
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('post', args=(pk,)))
+
+def LikeCommView(request, pk):
+    comm = get_object_or_404(Comment, id=pk)
+    if comm.likes.filter(username=request.user.username):
+        comm.likes.remove(request.user)
+    else:
+        comm.likes.add(request.user)
+    return HttpResponseRedirect(reverse('post', args=(comm.post_id,)))
 
 class Home(LoginMixn, ListView):
     template_name = 'main/home.html'

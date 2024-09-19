@@ -1,18 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
-<div class="border border-black p-5 my-3 text-white">
-    <h4>User: {{post.user.username}}</h4>
-    <h4>Created: {{post.create_date}}</h4>
-    <h4>Text: {{post.text}}</h4>
-    <h4>Likes: {{post.likes}}</h4>
-</div>
+{% include "main/includes/post.html" %}
 
 <h1>Comments:</h1>
-<p></p>
 
-<div class="border border-black p-5 my-3 text-white">
+<div class="border border-black p-5 my-3 text-white" id='comm-list'>
     <div class="border border-black pt-5 my-3 p-3 text-white">
         <form method="POST">
             {% csrf_token %}
@@ -21,11 +16,26 @@
         </form>
     </div>
 
-    {% for comm in post.comment.all %}
-    <div class="border border-black p-2 my-1 text-white">
-        <h4>user: {{ comm.user.username }}</h4>
-        <h4>text: {{ comm.text }}</h4>
-        <h4>likes: {{ comm.likes }}</h4>
+    {% for comm in post.cpost.all %}
+    <div class="border border-black p-4 my-3 text-white post" id='comm'>
+        <div class="post-header">
+            <img src="{{ comm.user.avatar.url }}">
+            <span class='post-username'>{{comm.user.username}}</span>
+            <span class='post-date'>{{post.create_date}}</span>
+        </div>
+        <div class="post-main">
+            <span>{{comm.text}}</span>
+        </div>
+        <div class="post-footer">
+        
+            <form action="{% url "like_comm" comm.pk %}", method='POST'>
+                {% csrf_token %}
+                <button type='submit', class='btn_like'>
+                    <img src="{% static "images/like.png" %}">
+                    <span>{{comm.likes.count}}</span>
+                </button>
+            </form>
+        </div>
     </div>
     {% endfor %}
 </div>

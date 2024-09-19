@@ -111,7 +111,7 @@ h1 {
 }
 
 .sidebar-nav > li {
-    margin: 20px 0 20px 0;
+    margin: 10px 0 20px 0;
 }
 
 
@@ -196,4 +196,84 @@ a.sidebar-link:hover {
 #communities > ul::-webkit-scrollbar-thumb {
     border-radius: 50px;  
     border: 3px solid orange; 
+}
+
+::-webkit-scrollbar {
+    background: rgb(68, 68, 68);
+    width: 12px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 50px;  
+    background-color: gray;
+}
+
+.post {
+    margin: auto;
+    width: 70%;
+    border-radius: 30px;
+}
+.post:hover {
+    background-color: #2a2d33;
+}
+.post-header {
+    border-bottom: 1px black solid;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+.post-header img {
+    width: 32px;
+}
+.post-username{
+    margin-right: 20px;
+}
+.post-username::after{
+    content: ' •';
+    margin-left: 20px;
+}
+.post-main {
+    display: flex;
+    flex-direction: column;
+}
+.post-main span {
+    font-size: 120%;
+    margin: 10px 0;
+}
+.post-images {
+    margin: auto;
+}
+.post-main {
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+}
+.post-footer {
+    display: flex;
+}
+.btn_like , .commenting {
+    margin-right: 20px;
+    background-color: #2e3538;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid black;
+    color: white;
+}
+.btn_like:hover, .commenting:hover {
+    background-color: #20282b;
+}
+a {
+    color: white;
+}
+#comm-list {
+    border-radius: 30px;
+}
+#comm-list div {
+    border-radius: 20px;
+}
+
+#comm {
+    width: 100%;
+}
+#comm * {
+    border-bottom: none;
+    margin-bottom: 0px;
 }

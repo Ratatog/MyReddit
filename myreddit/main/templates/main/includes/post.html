@@ -1,9 +1,35 @@
-<div class="border border-black p-5 my-3 text-white">
-    <h4>User: {{post.user.username}}</h4>
-    <h4>Created: {{post.create_date}}</h4>
-    <h4>Text: {{post.text}}</h4>
-    <h4>Likes: {{post.likes}}</h4>
+{% load static %}
+<div class="border border-black p-4 my-3 text-white post">
     <a href="{% url "post" post.pk %}">
-        <button class="btn btn-secondary">К ПОСТУ</button>
+    <div class="post-header">
+        <img src="{{ post.user.avatar.url }}">
+        <span class='post-username'>{{post.user.username}}</span>
+        <span class='post-date'>{{post.create_date}}</span>
+    </div>
+    <div class="post-main">
+        <span>{{post.text}}</span>
+        <div class="post-images">
+            {% if post.img.exists %}
+            <img src="{{ post.img.first.url.url }}">
+            {% endif %}
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="likes">
+            <form action="{% url "like_post" post.pk %}", method='POST'>
+                {% csrf_token %}
+                <button type='submit', class='btn_like'>
+                    <img src="{% static "images/like.png" %}">
+                    <span>{{post.likes.count}}</span>
+                </button>
+            </form>
+        </div>
+        <div class="commenting">
+            <a href="{% url "post" post.pk %}">
+                <img src="{% static "images/comment.png" %}">
+                <span>{{post.cpost.count}}</span>
+            </a>
+        </div>
+    </div>
     </a>
 </div>
