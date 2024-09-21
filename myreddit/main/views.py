@@ -71,7 +71,9 @@ class CreatePost(LoginMixn, CreateView):
         p.user = self.request.user
         response = super().form_valid(form)
         
-        Image.objects.create(url=form.cleaned_data.get('url'), post=self.object)
+        url = form.cleaned_data.get('url')
+        if url:
+            Image.objects.create(url=url, post=self.object)
         
         return response
 

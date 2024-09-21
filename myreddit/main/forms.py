@@ -19,9 +19,9 @@ class CommentForm(forms.ModelForm):
         
 class AddPostForm(forms.ModelForm):
     text = forms.CharField(label='', max_length=30, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2 w-75', 'placeholder': 'Title'}))
-    tags = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2 w-75', 'placeholder': 'Tags'}))
+    tags = forms.CharField(required=False, label='', widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2 w-75', 'placeholder': 'Tags'}))
     url = forms.ImageField(label='Image', required=False)
-    group = forms.ModelChoiceField(queryset=Group.objects.none(), empty_label='None Group')
+    group = forms.ModelChoiceField(required=False, queryset=Group.objects.none(), empty_label='None Group')
 
     class Meta:
         model = Post
@@ -35,7 +35,7 @@ class AddPostForm(forms.ModelForm):
             self.fields['group'].queryset = Group.objects.filter(admin=user)   
 class AddGroupForm(forms.ModelForm):
     title = forms.CharField(label='', max_length=30, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2 w-75', 'placeholder': 'Group Name'}))
-    description = forms.CharField(label='', max_length=80, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2 w-75', 'placeholder': 'Description'}))
+    description = forms.CharField(required=False, label='', max_length=80, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2 w-75', 'placeholder': 'Description'}))
     photo = forms.ImageField(label='Image')
     
     class Meta:
