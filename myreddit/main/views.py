@@ -1,9 +1,7 @@
-from typing import Any
-from django.db.models.query import QuerySet
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.db.models.base import Model as Model
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views import View
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, Image, Comment, Group
 from .forms import CommentForm, AddPostForm, AddGroupForm
@@ -63,29 +61,33 @@ class CreatePost(LoginMixn, CreateView):
     success_url = reverse_lazy('home')
     extra_context = {'title': 'Create post'}
     
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+    
     def form_valid(self, form):
         p = form.save(commit=False)
         p.user = self.request.user
         response = super().form_valid(form)
         
-        Image.objects.create(img=form.cleaned_data.get('img'), post=self.object)
+        Image.objects.create(url=form.cleaned_data.get('url'), post=self.object)
         
         return response
 
-class GroupView(LoginMixn, ListView):
+class GroupView(LoginMixn, DetailView):
     template_name = 'main/group.html'
-    context_object_name = 'posts'
+    context_object_name = 'group'
+    pk_url_kwarg = 'pk'
     
-    def get_context_data(self, **kwargs: Any):
+    def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
-        group = Group.objects.filter(pk=self.kwargs['pk'])[0]
-        context['title'] = group.title
-        context['posts'] = group.post.all()
-        context['group'] = group
+        context['title'] = context['group'].title
+        context['posts'] = context['group'].post.all()
         return context
     
-    def get_queryset(self):
-        return Post.objects.filter(group_id = self.kwargs['pk'])
+    def get_object(self, queryset = None):
+        return get_object_or_404(Group.objects, pk=self.kwargs[self.pk_url_kwarg])
     
 class GroupCreateView(LoginMixn, CreateView):
     form_class = AddGroupForm
@@ -101,4 +103,4 @@ class GroupCreateView(LoginMixn, CreateView):
         g.admin = self.request.user
         
         return  super().form_valid(form)
-    
+

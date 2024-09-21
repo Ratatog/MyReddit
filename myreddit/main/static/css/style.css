@@ -278,29 +278,29 @@ a {
     margin-bottom: 0px;
 }
 
-.group-header {
+.group-header, .profile-header {
     margin: auto;
     background-color: #222f35;
     padding: 30px;
     border-radius: 30px;
 }
-.g-h-top {
+.g-h-top, .p-h-top {
     display: flex;
 }
-.group-photo img {
+.group-photo img, .profile-photo img {
     width: 80px;
     margin-right: 30px;
 }
-.g-h-top {
+.g-h-top, .p-h-top {
     border-bottom: 1px solid black;
     margin-bottom: 10px;
     padding-bottom: 20px;
 }
-.g-h-top, .group-header span {
+.g-h-top, .group-header span, .p-h-top, .profile-header span {
     margin-top: auto;
     font-size: 170%;
 }
-.g-h-bottom span {
+.g-h-bottom span, .p-h-bottom span {
     font-size: 120%;
 }
 .group-main {
@@ -321,4 +321,37 @@ a {
     right: 0;
     height: 20px;
     margin-right: 10vw; */
+}
+.nav .nav-link {
+    color: white;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+.nav .active {
+    background-color: #4d5153 !important;
+    border: none;
+    color: white !important;
+}
+.group-mini {
+    height: max-content;
+    width: max-content;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 20px;
+    font-size: 50%;
+    border: 1px solid black;
+}
+.group-mini .g-h-top {
+    border: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.group-mini img {
+    width: 50px;
+}
+.profile-img {
+    max-width: 500px;
+}
+#nav-profile > span {
+    display: block;
 }

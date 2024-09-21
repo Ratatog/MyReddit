@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="profile">
+    <div class="profile-header">
+        <div class='p-h-top'>
+            <div class="profile-photo">
+                <img src="{{ userp.avatar.url }}">
+            </div>
+            <span>{{ userp.username }}</span>
+        </div>
+        <div class='p-h-bottom'>
+            <div class="profile-status">
+                <span>
+                    {% if userp.status %}
+                    {{userp.status}}
+                    {% else %}
+                    ...
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-main my-4">
+        <div class="profile-main-header"> <!-- text-white bg-secondary border-0 -->
+            <nav>
+                <div class="nav nav-tabs py-2 my-2 border-secondary border-2" id="nav-tab" role="tablist">
+                  <button class="nav-link active " id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="true">Profile</button>
+                  <button class="nav-link" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts" type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
+                  <button class="nav-link" id="nav-groups-tab" data-bs-toggle="tab" data-bs-target="#nav-groups" type="button" role="tab" aria-controls="nav-groups" aria-selected="false">Groups</button>
+                  <button class="nav-link" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments" type="button" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</button>
+                </div>
+            </nav>
+        </div>
+        <div class="profile-content">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                    {% include "users/includes/profile.html" %}
+                </div>
+                <div class="tab-pane fade" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab" tabindex="0">
+                    {% for post in userp.post.all %}
+                    {% include "main/includes/post.html" %}
+                    {% endfor %}
+                </div>
+                <div class="tab-pane fade" id="nav-groups" role="tabpanel" aria-labelledby="nav-groups-tab" tabindex="0">
+                    <div>
+                        <span>Admin:</span>
+                        {% for group in userp.group.all %}
+                        {% include "users/includes/group.html" %}
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <span>Member:</span>
+                        {% for group in userp.member.all %}
+                        {% include "users/includes/group.html" %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab" tabindex="0">
+                    {% for comm in userp.comment.all %}
+                    {% include "users/includes/comment.html" %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock content %}

@@ -44,3 +44,13 @@ class PasswordResetConfirmUserForm(SetPasswordForm):
     new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Confirm Password'}))
         
         
+class UpdateUserForm(forms.ModelForm):
+    avatar = forms.ImageField(required=False)
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Username'}))
+    status = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Status'}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Email'}))
+    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'First Name'}))
+    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Last Name'}))
+    class Meta:
+        model = get_user_model()
+        fields = ['avatar', 'username', 'status', 'email', 'first_name', 'last_name']

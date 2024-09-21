@@ -11,7 +11,6 @@ urlpatterns = [
     path('group/<int:pk>/', views.GroupView.as_view(), name='group'),
     path('group/create/', views.GroupCreateView.as_view(), name='group'),
     
-    
     path('like_post/<int:pk>/', views.LikePostView, name='like_post'),
     path('like_comm/<int:pk>/', views.LikeCommView, name='like_comm'),
 ]

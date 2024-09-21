@@ -9,7 +9,7 @@
     <div class="post-main">
         <span>{{post.text}}</span>
         <div class="post-images">
-            {% if post.img.exists %}
+            {% if post.img.first.url %}
             <img src="{{ post.img.first.url.url }}">
             {% endif %}
         </div>
