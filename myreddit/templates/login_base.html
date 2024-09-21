@@ -20,6 +20,11 @@
         </div>
         <div class="row">
             <div class="col-md-4 col-8 m-auto">
+                {% if user.is_authenticated %}
+                <h1 class="text-white text-center mt-5">You Alredy In Account!</h1>
+                <a id='btn-text' href="{% url "home" %}" class="nav-link text">To Home</a>
+                <a id='btn-text' href="{% url "users:logout" %}" class="nav-link text text-logout">Logout</a>
+                {% else %}
                 <div class="card border-black border-2 shadow-lg bg-dark">
                     <div class="card-body">
                         <div id="log-image">
@@ -33,6 +38,7 @@
                         </form>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

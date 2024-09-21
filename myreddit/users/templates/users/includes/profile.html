@@ -1,27 +1,30 @@
 {% load static %}
 
+<div class="profile-profile">
+    {% if user.pk == userp.pk %}
+    <div class="form-error text-white">{{ form.non_field_errors }}</div>
 
-{% if user.pk == userp.pk %}
-<div class="form-error text-white">{{ form.non_field_errors }}</div>
+    <img src="{{ userp.avatar.url }}" class='profile-img'>
 
-<img src="{{ userp.avatar.url }}" class='profile-img'>
+    <form method="POST", enctype='multipart/form-data'>
+        {% csrf_token %}
 
-<form method="POST", enctype='multipart/form-data'>
-    {% csrf_token %}
-
-    {% for f in form %}
-    {{ f }}
-    <div class="form-error text-white">{{ f.errors }}</div>
-    {% endfor %}
+        {% for f in form %}
+        {{ f }}
+        <div class="form-error text-white">{{ f.errors }}</div>
+        {% endfor %}
 
 
-    <button class="btn btn-success mt-3">Save</button>
-</form>
+        <button class="btn btn-success mt-3 w-25">Save</button>
+    </form>
 
-<a class="btn btn-success my-1" href="{% url "users:password_change" %}">Change Password</a>
-{% else %}
-<span>Username: {{userp.username}}</span>
-<span>Status: {{userp.status}}</span>
-<span>First Name: {{userp.first_name}}</span>
-<span>Last Name: {{userp.last_name}}</span>
-{% endif %}
+    <a class="btn btn-secondary my-1 w-25" href="{% url "users:password_change" %}">Change Password</a>
+    {% else %}
+    <div class="profile-read-content">
+        <label>Username:<span>{{userp.username}}</span></label>
+        <label>Status:<span>{{userp.status}}</span></label>
+        <label>First Name:<span>{{userp.first_name}}</span></label>
+        <label>Last Name:<span>{{userp.last_name}}</span></label>
+    </div>
+    {% endif %}
+</div>

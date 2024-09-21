@@ -57,7 +57,7 @@ class ShowPost(LoginMixn, DetailView, CreateView):
 
 class CreatePost(LoginMixn, CreateView):
     form_class = AddPostForm
-    template_name = 'main/post_create.html'
+    template_name = 'main/create.html'
     success_url = reverse_lazy('home')
     extra_context = {'title': 'Create post'}
     
@@ -91,7 +91,7 @@ class GroupView(LoginMixn, DetailView):
     
 class GroupCreateView(LoginMixn, CreateView):
     form_class = AddGroupForm
-    template_name = 'main/group_create.html'
+    template_name = 'main/create.html'
     extra_context = {'title': 'Create group'}
     
     def get_success_url(self):

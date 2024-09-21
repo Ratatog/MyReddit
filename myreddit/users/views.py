@@ -60,9 +60,6 @@ class ProfileView(LoginMixn, DetailView, UpdateView):
     pk_url_kwarg = 'pk'
     form_class = UpdateUserForm
     
-    def get_success_url(self):
-        return self.request.path
-    
     def get_object(self, queryset = None):
         return get_object_or_404(get_user_model(), pk=self.kwargs[self.pk_url_kwarg])
     

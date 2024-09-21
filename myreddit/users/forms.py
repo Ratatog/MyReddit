@@ -45,12 +45,12 @@ class PasswordResetConfirmUserForm(SetPasswordForm):
         
         
 class UpdateUserForm(forms.ModelForm):
-    avatar = forms.ImageField(required=False)
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Username'}))
-    status = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Status'}))
-    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Email'}))
-    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'First Name'}))
-    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Last Name'}))
+    avatar = forms.ImageField(required=False, label='Photo')
+    username = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Username'}))
+    status = forms.CharField(label='', required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Status'}))
+    email = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Email'}))
+    first_name = forms.CharField(label='', required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'First Name'}))
+    last_name = forms.CharField(label='', required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2', 'placeholder': 'Last Name'}))
     class Meta:
         model = get_user_model()
         fields = ['avatar', 'username', 'status', 'email', 'first_name', 'last_name']

@@ -1,12 +1,14 @@
 {% load static %}
 
 <div class="group">
-    <div class="group-header group-mini">
-        <div class='g-h-top'>
-            <div class="group-photo">
-                <img src="{{ group.photo.url }}">
+    <a href="{% url "group" group.pk  %}">
+        <div class="group-header group-mini">
+            <div class='g-h-top'>
+                <div class="group-photo">
+                    <img src="{{ group.photo.url }}">
+                </div>
+                <span>{{ group.title }}</span>
             </div>
-            <span>{{ group.title }}</span>
         </div>
-    </div>
+    </a>
 </div>
