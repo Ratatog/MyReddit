@@ -1,4 +1,6 @@
 {% load static %}
+{% load main_tags %}
+
 <div class="border border-black p-4 my-3 text-white post">
     <a href="{% url "post" post.pk %}">
     <div class="post-header">
@@ -7,7 +9,7 @@
         <span class='post-date'>{{post.create_date}}</span>
     </div>
     <div class="post-main">
-        <span>{{post.text}}</span>
+        <span>{% md_html post.text %}</span>
         <div class="post-images">
             {% if post.img.first.url %}
             <img src="{{ post.img.first.url.url }}">

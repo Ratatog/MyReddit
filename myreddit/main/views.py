@@ -24,6 +24,18 @@ def LikeCommView(request, pk):
         comm.likes.add(request.user)
     return HttpResponseRedirect(reverse('post', args=(comm.post_id,)))
 
+def JoinGroupView(request, pk):
+    group = Group.objects.get(pk=pk)
+    group.members.add(request.user)
+    group.save()
+    return HttpResponseRedirect(reverse('group', args=(group.pk, )))
+
+def QuitGroupView(request, pk):
+    group = Group.objects.get(pk=pk)
+    group.members.remove(request.user)
+    group.save()
+    return HttpResponseRedirect(reverse('group', args=(group.pk, )))
+
 class Home(LoginMixn, ListView):
     template_name = 'main/home.html'
     context_object_name = 'posts'

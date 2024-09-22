@@ -195,6 +195,7 @@ a.sidebar-link:hover {
 #communities > ul::-webkit-scrollbar-thumb {
     border-radius: 50px;
     border: 3px solid orange;
+    background-color: orange;
 }
 
 ::-webkit-scrollbar {
@@ -285,6 +286,7 @@ a {
     background-color: #29412967;
     padding: 30px;
     border-radius: 30px;
+    border: 1px solid black;
 }
 .g-h-top,
 .p-h-top {
@@ -331,6 +333,10 @@ a {
     margin-top: auto;
     font-size: 170%;
 }
+.g-h-side {
+    float: right;
+    margin-top: -20px;
+}
 .g-h-bottom span,
 .p-h-bottom span {
     font-size: 120%;
@@ -345,10 +351,11 @@ a {
     width: 85%;
 }
 .group-side {
-    background-color: #0a1616;
+    background-color: #17272bc5;
     border-radius: 30px;
     padding: 15px;
     width: 15%;
+    border: 1px solid black;
 }
 .nav .nav-link {
     color: white;
@@ -428,7 +435,29 @@ a {
     color: rgb(133, 3, 7) !important;
 }
 
-.group-minin-li img {
-    width: 24px;
-    height: 24px;
+.group-mini-li img {
+    width: 24px !important;
+    height: 24px !important;
+}
+.admin {
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+.group-side a:hover {
+    color: #185ba3;
+}
+
+.list-members {
+    overflow-y: scroll;
+    max-height: 50vh;
+}
+
+.list-members::-webkit-scrollbar {
+    background: gray;
+    width: 5px;
+}
+.list-members::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: orange;
 }

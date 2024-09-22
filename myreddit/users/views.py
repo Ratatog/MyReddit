@@ -57,11 +57,13 @@ class PasswordResetCompleteUser(PasswordResetCompleteView):
 class ProfileView(LoginMixn, DetailView, UpdateView):
     template_name = 'users/profile.html'
     context_object_name = 'userp'
-    pk_url_kwarg = 'pk'
     form_class = UpdateUserForm
     
     def get_object(self, queryset = None):
-        return get_object_or_404(get_user_model(), pk=self.kwargs[self.pk_url_kwarg])
+        if field := self.kwargs.get(self.pk_url_kwarg):
+            return get_object_or_404(get_user_model(), pk=field)
+        elif field := self.kwargs.get(self.slug_url_kwarg):
+            return get_object_or_404(get_user_model(), username=field)
     
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)

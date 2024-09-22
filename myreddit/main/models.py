@@ -17,7 +17,7 @@ class Post(models.Model):
     group = models.ForeignKey("main.Group", on_delete=models.CASCADE, null=True, default='', verbose_name='Группа', related_name='post')
     create_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', null=True)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name='Пользователь', related_name='post')
-    tags = models.CharField(max_length=300, verbose_name='Теги', null=True, default=None)
+    tags = models.CharField(max_length=300, verbose_name='Теги', null=True, blank=True, default=None)
     
     class Meta:
         ordering = ['-create_date']

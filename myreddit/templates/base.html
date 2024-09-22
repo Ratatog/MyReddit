@@ -92,7 +92,12 @@
                         <span>Communities</span>
                     </a>
                     <ul id="comm" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        {% for group in user.groups.all %}
+                        <li>Admin:</li>
+                        {% for group in user.group.all %}
+                        {% include "main/includes/group_mini.html" %}
+                        {% endfor %}
+                        <li>Member:</li>
+                        {% for group in user.member.all %}
                         {% include "main/includes/group_mini.html" %}
                         {% endfor %}
                     </ul>
