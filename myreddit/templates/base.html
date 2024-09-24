@@ -51,7 +51,7 @@
                 </li>
                 <li class="nav-item ms-2 d-none d-md-inline hover-shadow">
                     <a href="{% url "users:profile" user.id %}" class="nav-link">
-                        <img src="{% static "images/user32.png" %}">
+                        <img class='nav-avatar' src="{{ user.avatar.url }}">
                     </a>
                 </li>
             </ul>
