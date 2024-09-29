@@ -1,8 +1,9 @@
 from django.db.models.base import Model as Model
+from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, View
 from .models import Post, Image, Comment, Group
 from .forms import CommentForm, AddPostForm, AddGroupForm
 from .utils import LoginMixn
@@ -42,11 +43,55 @@ class Home(LoginMixn, ListView):
     extra_context = {'title': 'Home'}
 
     def get_queryset(self):
+        return Post.non_group.all()
+    
+class SubscriptionsView(Home):
+    def get_queryset(self):
+        return Post.subscription.get_queryset(self.request.user).all()
+    
+class AllHomeView(Home):
+    def get_queryset(self):
         return Post.objects.all()
 
-class TagHome(Home):
+# def Search(request):
+#     return searchbar[request.GET.get('type')]
+#     return HttpResponseRedirect(reverse_lazy('home'))
+
+class Search(LoginMixn, ListView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Search For ' + searchbar[self.request.GET['type']]['title']
+        return context
+    
+    def get_template_names(self):
+        return [searchbar[self.request.GET['type']]['template']]
+    
+    def get_context_object_name(self, object_list):
+        return searchbar[self.request.GET['type']]['context_name']
+    
     def get_queryset(self):
-        return Post.objects.filter(tags__contains=self.kwargs['tag'])
+        return searchbar[self.request.GET['type']]['query'].get_queryset(self)
+        return SearchTagView.get_queryset(self)
+    
+class SearchTagView(Search):
+    def get_queryset(self):
+        return Post.objects.filter(tags__contains=self.request.GET['inp'])
+class SearchPostTitleView(Search):
+    def get_queryset(self):
+        return Post.objects.filter(text__contains=self.request.GET['inp'])
+class SearchGroupTitleView(Search):
+    def get_queryset(self):
+        return Group.objects.filter(title__contains=self.request.GET['inp'])
+class SearchUsernameView(Search):
+    def get_queryset(self):
+        return get_user_model().objects.filter(username__contains=self.request.GET['inp'])
+    
+searchbar = {
+    'post_tag': {'query': SearchTagView, 'title': 'Post Tag', 'template': 'main/search_post.html', 'context_name': 'posts'},
+    'post_title': {'query': SearchPostTitleView, 'title': 'Post Title', 'template': 'main/search_post.html', 'context_name': 'posts'},
+    'group_title': {'query': SearchGroupTitleView, 'title': 'Group Title', 'template': 'main/search_group.html', 'context_name': 'groups'},
+    'username': {'query': SearchUsernameView, 'title': 'Username', 'template': 'main/search_user.html', 'context_name': 'members'},
+}
 
 class ShowPost(LoginMixn, DetailView, CreateView):
     form_class = CommentForm

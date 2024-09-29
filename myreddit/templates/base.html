@@ -1,4 +1,5 @@
 {% load static %}
+{% load main_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,35 +27,51 @@
 
         <!-- navbar links -->
             <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav">
-            <ul class="navbar-nav">
-                <li class="nav-item d-md-none">
-                    <a href="{% url "add_post" %}" class="nav-link">Create</a>
-                </li>
-                <li class="nav-item ms-2 d-none d-md-inline hover-shadow">
-                    <a href="{% url "add_post" %}" class="nav-link">
-                        <img src="{% static "images/create.png" %}">
-                        <span>Create</span>
-                    </a>
-                </li>
+                <div class="searchbar">
+                    {% searchbar as search %}
+                    <form action='{% url "search" %}'>
+                        <a class="has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#searcher" aria-expanded="false" aria-controls="searcher">
+                            <input autocomplete="off" name='inp' type="search" class="form-control" placeholder="Search">
+                        </a>
+                        <div id='searcherup'>
+                            <ul id="searcher" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#searcher">
+                                {% for i in search %}
+                                <li class="s-li"><button name="type" value='{{i.name}}'>{{i.title}}</button></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </form>
+                </div>
 
-                <li class="nav-item d-md-none">
-                    <a href="#" class="nav-link">Notifications</a>
-                </li>
-                <li class="nav-item ms-2 d-none d-md-inline hover-shadow">
-                    <a href="#" class="nav-link">
-                        <img src="{% static "images/notification.png" %}">
-                    </a>
-                </li>
+                <ul class="navbar-nav">
+                    <li class="nav-item d-md-none">
+                        <a href="{% url "add_post" %}" class="nav-link">Create</a>
+                    </li>
+                    <li class="nav-item ms-2 d-none d-md-inline hover-shadow">
+                        <a href="{% url "add_post" %}" class="nav-link">
+                            <img src="{% static "images/create.png" %}">
+                            <span>Create</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item d-md-none">
-                    <a href="{% url "users:profile" user.id %}" class="nav-link">Account</a>
-                </li>
-                <li class="nav-item ms-2 d-none d-md-inline hover-shadow">
-                    <a href="{% url "users:profile" user.id %}" class="nav-link">
-                        <img class='nav-avatar' src="{{ user.avatar.url }}">
-                    </a>
-                </li>
-            </ul>
+                    <li class="nav-item d-md-none">
+                        <a href="#" class="nav-link">Notifications</a>
+                    </li>
+                    <li class="nav-item ms-2 d-none d-md-inline hover-shadow">
+                        <a href="#" class="nav-link">
+                            <img src="{% static "images/notification.png" %}">
+                        </a>
+                    </li>
+
+                    <li class="nav-item d-md-none">
+                        <a href="{% url "users:profile" user.id %}" class="nav-link">Account</a>
+                    </li>
+                    <li class="nav-item ms-2 d-none d-md-inline hover-shadow">
+                        <a href="{% url "users:profile" user.id %}" class="nav-link">
+                            <img class='nav-avatar' src="{{ user.avatar.url }}">
+                        </a>
+                    </li>
+                </ul>
             </div>
     </nav>
 
@@ -74,13 +91,13 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href{% url "home" %} class="sidebar-link">
-                        <img src="{% static "images/popular_btn.png" %}">
-                        <span>Popular</span>
+                    <a href="{% url "subscriptions" %}" class="sidebar-link">
+                        <img src="{% static "images/subscriptions_btn.png" %}">
+                        <span>Subscriptions</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{% url "home" %}" class="sidebar-link">
+                    <a href="{% url "all_home" %}" class="sidebar-link">
                         <img src="{% static "images/all_btn.png" %}">
                         <span>All</span>
                     </a>

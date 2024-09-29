@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if title %}
+<h1 class='text-center mt-2'>{{ title }}</h1>
+{% endif %}
+
+{% if groups %}
+{% for group in groups %}
+{% include "users/includes/group.html" %}
+{% endfor %}
+{% else %}
+<h1>No Group Found</h1>
+{% endif %}
+
+{% endblock content %}

@@ -465,3 +465,32 @@ a {
     width: 32px;
     height: 32px;
 }
+
+#searcher {
+    position: absolute;
+    background-color: rgb(26, 29, 34);
+    border-radius: 10px;
+    border: 3px solid black;
+    /* display: flex;
+    flex-direction: column; */
+}
+#searcher button {
+    text-align: left;
+    padding: 4px 0px 4px 15px;
+    border: none;
+    background: none;
+    width: 100%;
+    height: 100%;
+}
+#searcher li:first-child {
+    border-radius: 10px 10px 0px 0px;
+}
+#searcher li:last-child {
+    border-radius: 0px 0px 10px 10px;
+}
+#searcher li:hover {
+    background-color: rgb(53, 58, 66);
+}
+#searcher *:not(:last-child) {
+    border-bottom: 1px solid gray;
+}

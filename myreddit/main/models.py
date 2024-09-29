@@ -1,5 +1,12 @@
 from django.db import models
 
+class SubsribptionManager(models.Manager):
+    def get_queryset(self, user) -> models.QuerySet:
+        return super().get_queryset().filter(group__members = user)
+    
+class NonGroupManager(models.Manager):
+    def get_queryset(self) -> models.QuerySet:
+        return super().get_queryset().filter(group_id = None)
 
 class Group(models.Model):
     title = models.CharField(max_length=35, verbose_name='Название', unique=True)
@@ -18,6 +25,10 @@ class Post(models.Model):
     create_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания', null=True)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name='Пользователь', related_name='post')
     tags = models.CharField(max_length=300, verbose_name='Теги', null=True, blank=True, default=None)
+    
+    objects = models.Manager()
+    subscription = SubsribptionManager()
+    non_group = NonGroupManager()
     
     class Meta:
         ordering = ['-create_date']
