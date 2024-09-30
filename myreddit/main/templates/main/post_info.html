@@ -3,6 +3,15 @@
 
 {% block content %}
 
+<div class="tags">
+    <h5>Tags:</h5>
+    <ul class="tags-ul">
+        {% for t in post.tags.split %}
+        <a href="{% url "search" %}?type=post_tag&inp={{t}}"><li class="tags-li">{{ t }}</li></a>
+        {% endfor %}
+    </ul>
+</div>
+
 {% include "main/includes/post.html" %}
 
 <h1>Comments:</h1>

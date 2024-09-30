@@ -53,9 +53,6 @@ class AllHomeView(Home):
     def get_queryset(self):
         return Post.objects.all()
 
-# def Search(request):
-#     return searchbar[request.GET.get('type')]
-#     return HttpResponseRedirect(reverse_lazy('home'))
 
 class Search(LoginMixn, ListView):
     def get_context_data(self, **kwargs):
@@ -71,7 +68,6 @@ class Search(LoginMixn, ListView):
     
     def get_queryset(self):
         return searchbar[self.request.GET['type']]['query'].get_queryset(self)
-        return SearchTagView.get_queryset(self)
     
 class SearchTagView(Search):
     def get_queryset(self):

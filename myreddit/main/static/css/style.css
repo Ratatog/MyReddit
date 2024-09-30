@@ -494,3 +494,32 @@ a {
 #searcher *:not(:last-child) {
     border-bottom: 1px solid gray;
 }
+
+.tags {
+	display: flex;
+    margin-top: 10px;
+}
+.tags-ul {
+    display: flex;
+    padding-left: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.tags-ul a {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.tags-li {
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    padding: 0px 3px;
+    background-color: #224250;
+}
+.tags-li:hover {
+    background-color: #245a45;
+    box-shadow: 1px 1px 1px rgb(31, 31, 31);
+}
+.tags h5 {
+    width: max-content;
+    color: #0ba14a;
+}
