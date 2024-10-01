@@ -34,7 +34,7 @@
                             <input autocomplete="off" name='inp' type="search" class="form-control" placeholder="Search">
                         </a>
                         <div id='searcherup'>
-                            <ul id="searcher" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#searcher">
+                            <ul id="searcher" class="list-unstyled collapse" data-bs-parent="#searcher">
                                 {% for i in search %}
                                 <li class="s-li"><button name="type" value='{{i.name}}'>{{i.title}}</button></li>
                                 {% endfor %}
@@ -55,12 +55,17 @@
                     </li>
 
                     <li class="nav-item d-md-none">
-                        <a href="#" class="nav-link">Notifications</a>
+                        <a class="nav-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#notif" aria-expanded="false" aria-controls="notif">Notifications</a>
                     </li>
-                    <li class="nav-item ms-2 d-none d-md-inline hover-shadow">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item ms-2 d-none d-md-inline hover-shadow notifications">
+                        <a class="nav-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#notif" aria-expanded="false" aria-controls="notif">
                             <img src="{% static "images/notification.png" %}">
                         </a>
+                        <ul id="notif" class="list-unstyled collapse h-100" data-bs-parent="#notif">
+                            {% for i in user.notif.all %}
+                            <li class="s-li">{{i.text}}</li>
+                            {% endfor %}
+                        </ul>
                     </li>
 
                     <li class="nav-item d-md-none">

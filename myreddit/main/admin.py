@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Group, Post, Image, Comment
+from .models import Group, Post, Image, Comment, Notification
 
 
 class HasGroupFilter(admin.SimpleListFilter):
@@ -76,3 +76,12 @@ class CommentAdmin(admin.ModelAdmin):
     ordering = ('-create_date', 'text')
     save_on_top = True
     list_filter = ['create_date']
+
+
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'text', 'user')
+    list_display_links = ('pk', 'text')
+    search_fields = ('text', 'pk', 'user_id')
+    ordering = ('pk',)
+    save_on_top = True

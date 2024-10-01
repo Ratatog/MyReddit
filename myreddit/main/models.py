@@ -58,3 +58,13 @@ class Comment(models.Model):
         
     def __str__(self):
         return self.text[:20]
+
+class Notification(models.Model):
+    text = models.CharField(max_length=150, verbose_name='Текст')
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, verbose_name='Пользователь', related_name='notif')
+    
+    class Meta:
+        ordering = ['-pk']
+    
+    def __str__(self):
+        return self.text[:20]

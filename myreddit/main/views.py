@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, View
-from .models import Post, Image, Comment, Group
+from .models import Post, Image, Comment, Group, Notification
 from .forms import CommentForm, AddPostForm, AddGroupForm
 from .utils import LoginMixn
 
@@ -21,6 +21,10 @@ def LikePostView(request, pk):
         post.likes.remove(request.user)
     else:
         post.likes.add(request.user)
+        if post.user != request.user:
+            message = f'Post({post.text[:10]}...) has been liked by {request.user.username}'
+            Notification.objects.create(text=message, user=post.user)
+            
     return HttpResponseRedirect(reverse('post', args=(pk,)))
 
 def LikeCommView(request, pk):
@@ -29,12 +33,20 @@ def LikeCommView(request, pk):
         comm.likes.remove(request.user)
     else:
         comm.likes.add(request.user)
+        if comm.user != request.user:
+            message = f'Comment({comm.text[:10]}...) has been liked by {request.user.username}'
+            Notification.objects.create(text=message, user=comm.user)
+
     return HttpResponseRedirect(reverse('post', args=(comm.post_id,)))
 
 def JoinGroupView(request, pk):
     group = Group.objects.get(pk=pk)
     group.members.add(request.user)
     group.save()
+    
+    message = f'{request.user.username} joined the group({group.title})'
+    Notification.objects.create(text=message, user=group.admin)
+    
     return HttpResponseRedirect(reverse('group', args=(group.pk, )))
 
 def QuitGroupView(request, pk):
