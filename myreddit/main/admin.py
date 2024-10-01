@@ -3,6 +3,28 @@ from django.utils.safestring import mark_safe
 from .models import Group, Post, Image, Comment
 
 
+class HasGroupFilter(admin.SimpleListFilter):
+    title = 'Has a Group'
+    parameter_name = 'has_group'
+    
+    def lookups(self, request, model_admin):
+        return [('True', 'Yes'), ('False', 'No')]
+        
+    def queryset(self, request, queryset):
+        if self.value() == 'True': return queryset.filter(group__isnull = False)
+        if self.value() == 'False': return queryset.filter(group__isnull = True)
+        
+class HasTagsFilter(admin.SimpleListFilter):
+    title = 'Has a Tags'
+    parameter_name = 'has_tags'
+    
+    def lookups(self, request, model_admin):
+        return [('True', 'Yes'), ('False', 'No')]
+        
+    def queryset(self, request, queryset):
+        if self.value() == 'True': return queryset.filter(tags__isnull = False)
+        if self.value() == 'False': return queryset.filter(tags__isnull = True)
+
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('pk', 'title', 'description', 'group_photo')
@@ -23,6 +45,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('pk', 'title', 'create_date', 'tags')
     ordering = ('-create_date', 'text')
     save_on_top = True
+    list_filter = ['create_date', HasGroupFilter, HasTagsFilter]
     
     @admin.display(description='Фото')
     def post_first_photo(self, post):
@@ -52,3 +75,4 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('pk', 'text', 'create_date')
     ordering = ('-create_date', 'text')
     save_on_top = True
+    list_filter = ['create_date']
