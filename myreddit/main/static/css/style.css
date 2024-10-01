@@ -1,6 +1,7 @@
 #main-menu {
     border-bottom: 3px #3d4143 solid;
     box-shadow: 5px 0px 5px black;
+    background-color: rgb(28, 31, 36) !important;
 }
 #btn-text {
     color: #0d6efd;
@@ -543,4 +544,8 @@ a {
 .tags h5 {
     width: max-content;
     color: #0ba14a;
+}
+
+.wrapper {
+    background-color: rgb(28, 31, 36);
 }
