@@ -1,0 +1,37 @@
+{% load static %}
+{% load main_tags %}
+
+<div class="border border-black p-4 my-3 text-white post" onclick="window.location.href='{% url "post" post.pk %}'">
+    <div class="post-header">
+        <a href="{% url "users:profile" post.user.pk %}">
+            <img src="{{ post.user.avatar.url }}">
+            <span class='post-username'>{{post.user.username}}</span>
+        </a>
+        <span class='post-date'>{{post.create_date}}</span>
+    </div>
+    <div class="post-main">
+        <span>{% md_html post.text %}</span>
+        <div class="post-images">
+            {% if post.img.first.url %}
+            <img src="{{ post.img.first.url.url }}">
+            {% endif %}
+        </div>
+    </div>
+    <div class="post-footer">
+        <div class="likes">
+            <form action="{% url "like_post" post.pk %}", method='POST'>
+                {% csrf_token %}
+                <button type='submit', class='btn_like'>
+                    <img src="{% static "images/like.png" %}">
+                    <span>{{post.likes.count}}</span>
+                </button>
+            </form>
+        </div>
+        <div class="commenting">
+            <a href="{% url "post" post.pk %}">
+                <img src="{% static "images/comment.png" %}">
+                <span>{{post.cpost.count}}</span>
+            </a>
+        </div>
+    </div>
+</div>

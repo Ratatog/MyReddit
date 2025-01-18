@@ -1,0 +1,6 @@
+{% load static %}
+
+<li class="sidebar-item subitem group-mini-li">
+    <img src="{{ member.avatar.url }}">
+    <a href="{% url "users:profile" member.pk %}" class="sidebar-link">{{member.username}}</a>
+</li>

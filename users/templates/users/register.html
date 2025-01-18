@@ -1,0 +1,16 @@
+{% extends "login_base.html" %}
+{% block content %}
+<div class="form-error">{{ form.non_field_errors }}</div>
+
+{% for f in form %}
+{{ f }}
+<div class="form-error text-white">{{ f.errors }}</div>
+{% endfor %}
+
+
+<div class="text-center mt-3">
+    <button class="btn btn-success my-3">Register</button>
+    <a id='btn-text' href="{% url "users:login" %}" class="nav-link text">Alredy Have An Account?</a>
+</div>
+
+{% endblock content %}

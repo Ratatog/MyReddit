@@ -1,0 +1,6 @@
+{% load static %}
+
+<li class="sidebar-item subitem group-mini-li">
+    <img src="{{ group.photo.url }}">
+    <a href="{% url "group" group.pk %}" class="sidebar-link">{{group.title|slice:":15"}}</a>
+</li>

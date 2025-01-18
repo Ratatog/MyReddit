@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="tags">
+    <h5>Tags:</h5>
+    <ul class="tags-ul">
+        {% for t in post.tags.split %}
+        <a href="{% url "search" %}?type=post_tag&inp={{t}}"><li class="tags-li">{{ t }}</li></a>
+        {% endfor %}
+    </ul>
+</div>
+
+{% include "main/includes/post.html" %}
+
+<h1>Comments:</h1>
+
+<div class="border border-black p-5 my-3 text-white" id='comm-list'>
+    <div class="border border-black pt-5 my-3 p-3 text-white">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="text" class="form-control my-3 py-2 w-75" placeholder="Text" maxlength="300" required="" id="id_text">
+            <button type="submit" class="btn btn-success">Send</button>
+        </form>
+    </div>
+
+    {% for comm in post.cpost.all %}
+    {% include "main/includes/comment.html" %}
+    {% endfor %}
+</div>
+
+{% endblock content %}
