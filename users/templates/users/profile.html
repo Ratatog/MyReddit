@@ -44,6 +44,7 @@
                   <button class="nav-link" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts" type="button" role="tab" aria-controls="nav-posts" aria-selected="false">Posts</button>
                   <button class="nav-link" id="nav-groups-tab" data-bs-toggle="tab" data-bs-target="#nav-groups" type="button" role="tab" aria-controls="nav-groups" aria-selected="false">Groups</button>
                   <button class="nav-link" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments" type="button" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</button>
+                  <button class="nav-link" id="nav-friends-tab" data-bs-toggle="tab" data-bs-target="#nav-friends" type="button" role="tab" aria-controls="nav-friends" aria-selected="false">Friends</button>
                 </div>
             </nav>
         </div>
@@ -74,6 +75,11 @@
                 <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab" tabindex="0">
                     {% for comm in userp.comment.all %}
                     {% include "main/includes/comment.html" %}
+                    {% endfor %}
+                </div>
+                <div class="tab-pane fade" id="nav-friends" role="tabpanel" aria-labelledby="nav-friends-tab" tabindex="0">
+                    {% for member in userp.friend.all %}
+                    {% include "users/includes/profile_mini.html" %}
                     {% endfor %}
                 </div>
             </div>
