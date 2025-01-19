@@ -5,11 +5,34 @@ from django.views.generic import DetailView, CreateView, UpdateView
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.contrib.auth import logout, get_user_model
 from .forms import  RegisterUserForm, LoginUserForm, PasswordChangeUserForm, PasswordResetUserForm, PasswordResetConfirmUserForm, UpdateUserForm
+from main.models import Notification
 from main.utils import LoginMixn
 
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('users:login'))
+
+def friend(request, method, u1, u2):
+    u1 = get_user_model().objects.get(username=u1)
+    u2 = get_user_model().objects.get(username=u2)
+    
+    html1 = f"<a class='text-success' href='{reverse_lazy('users:profile', args=(u1.pk,))}'>{u1}</a>"
+    html2 = f"<a class='text-success' href='{reverse_lazy('users:profile', args=(u2.pk,))}'>{u2}</a>"
+    
+    if method == 'add':
+        u1.requested.add(u2)
+        Notification.objects.create(text=f"{html2} wants to be friends with you", user=u1)
+    elif method == 'deny':
+        u1.requested.remove(u2)
+    elif method == 'accept':
+        u2.requested.remove(u1)
+        u2.friend.add(u1)
+        Notification.objects.create(text=f"You're friends with {html1} now", user=u2)
+        Notification.objects.create(text=f"You're friends with {html2} now", user=u1)
+    else:
+        u2.friend.remove(u1)
+    
+    return HttpResponseRedirect(reverse('users:profile', args=(u1.pk,)))
 
 class RegisterUser(CreateView):
     form_class = RegisterUserForm

@@ -63,7 +63,7 @@
                         </a>
                         <ul id="notif" class="list-unstyled collapse h-100" data-bs-parent="#notif">
                             {% for i in user.notif.all %}
-                            <li class="s-li">{{i.text}}</li>
+                            <li class="s-li">{{i.text|safe}}</li>
                             {% endfor %}
                         </ul>
                     </li>

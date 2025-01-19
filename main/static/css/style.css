@@ -290,8 +290,12 @@ a {
     border: 1px solid black;
 }
 .g-h-top,
-.p-h-top {
+.p-h-top,
+.p-h-friend {
     display: flex;
+}
+.p-h-friend a {
+    width: 10%;
 }
 .profile-profile {
     padding: 3%;

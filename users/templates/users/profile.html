@@ -21,6 +21,19 @@
                 </span>
             </div>
         </div>
+        {% if userp != user %}
+        <div class="p-h-friend">
+            {% if userp in user.friend.all %}
+            <a href='{% url "users:friend" 'delete' userp user %}' class='btn btn-danger mt-3'>Delete Friend</a>
+            {% elif userp in user.requested.all %}
+            <a href='{% url "users:friend" 'accept' userp user %}' class='btn btn-warning mt-3'>Accept Friend</a>
+            {% elif user in userp.requested.all %}
+            <a href='{% url "users:friend" 'deny' userp user %}' class='btn btn-danger mt-3'>Deny Friend</a>
+            {% else %}
+            <a href='{% url "users:friend" 'add' userp user %}' class='btn btn-success mt-3'>Add Friend</a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 
     <div class="profile-main my-4">

@@ -19,4 +19,6 @@ urlpatterns = [
     
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='profile'),
     path('profile/<slug:slug>/', views.ProfileView.as_view(), name='profile'),
+    
+    path('friend/<method>/<u1>/<u2>/', views.friend, name='friend'),
 ]

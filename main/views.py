@@ -102,32 +102,6 @@ class Search(LoginMixn, ListView):
         return searcher['model'].objects.filter(**for_filter)
 
 
-# searchbar = {
-#     'post_tag': {'query': 'tags__contains', 'model': Post, 'title': 'Post Tag', 'template': 'main/search_post.html', 'context_name': 'posts'},
-#     'post_title': {'query': 'text__contains', 'model': Post, 'title': 'Post Title', 'template': 'main/search_post.html', 'context_name': 'posts'},
-#     'group_title': {'query': 'title__contains', 'model': Group, 'title': 'Group Title', 'template': 'main/search_group.html', 'context_name': 'groups'},
-#     'username': {'query': 'username__contains', 'model': get_user_model(), 'title': 'Username', 'template': 'main/search_user.html', 'context_name': 'members'},
-# }
-
-# class SearhView(LoginMixn, ListView, FormView):
-#     form_class = SearcherFilterForm
-    
-#     def get_context_object_name(self, object_list):
-#         return 'posts'
-    
-#     def get_template_names(self):
-#         return ['main/search_post.html']
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = 'title'
-#         return context
-    
-#     def get_queryset(self):
-#         return Post.objects.all()
-    
-    
-
 class ShowPost(LoginMixn, DetailView, CreateView):
     form_class = CommentForm
     template_name = 'main/post_info.html'

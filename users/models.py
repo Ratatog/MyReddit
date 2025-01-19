@@ -9,6 +9,8 @@ class User(AbstractUser):
     status = models.CharField(max_length=80, default='', blank=True, null=True, verbose_name='Статус')
     groups = models.ManyToManyField('main.Group', blank=True, related_name='groups', verbose_name='Группы')
     likes = models.ManyToManyField('main.Post', blank=True, related_name='liked', verbose_name='Лайки')
+    friend = models.ManyToManyField('self', blank=True, verbose_name='Друзья', related_name='friends')
+    requested = models.ManyToManyField('self', blank=True, verbose_name='Запросы', related_name='req', symmetrical=False)
     
     def get_absolute_url(self):
         return reverse("users:profile", kwargs={'pk': self.id})
