@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.forms import ValidationError
 from django.urls import reverse
 from myreddit.settings import DEFAULT_USER_IMAGE
 
@@ -11,6 +12,12 @@ class User(AbstractUser):
     likes = models.ManyToManyField('main.Post', blank=True, related_name='liked', verbose_name='Лайки')
     friend = models.ManyToManyField('self', blank=True, verbose_name='Друзья', related_name='friends')
     requested = models.ManyToManyField('self', blank=True, verbose_name='Запросы', related_name='req', symmetrical=False)
+    
+    def clean(self):
+        super().clean()
+        
+        if User.objects.filter(email=self.email).exclude(pk=self.pk).exists():
+            raise ValidationError({'email': 'Такой  Email уже используется'})
     
     def get_absolute_url(self):
         return reverse("users:profile", kwargs={'pk': self.id})

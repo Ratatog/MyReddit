@@ -212,9 +212,10 @@ a.sidebar-link:hover {
     margin: auto;
     width: 70%;
     border-radius: 30px;
+    background-color: #2a2d33;
 }
 .post:hover {
-    background-color: #2a2d33;
+    background-color: #232935;
 }
 .post-header {
     border-bottom: 1px black solid;

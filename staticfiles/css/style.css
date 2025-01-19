@@ -212,9 +212,10 @@ a.sidebar-link:hover {
     margin: auto;
     width: 70%;
     border-radius: 30px;
+    background-color: #2a2d33;
 }
 .post:hover {
-    background-color: #2a2d33;
+    background-color: #232935;
 }
 .post-header {
     border-bottom: 1px black solid;
@@ -290,8 +291,12 @@ a {
     border: 1px solid black;
 }
 .g-h-top,
-.p-h-top {
+.p-h-top,
+.p-h-friend {
     display: flex;
+}
+.p-h-friend a {
+    width: 10%;
 }
 .profile-profile {
     padding: 3%;
