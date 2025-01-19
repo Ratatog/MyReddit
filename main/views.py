@@ -7,7 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from decouple import config
 from .models import Post, Image, Comment, Group, Notification
-from .forms import CommentForm, AddPostForm, AddGroupForm, SearcherFilterForm
+from .forms import CommentForm, AddPostForm, AddGroupForm, SearcherFilterForm, SupportForm
 from .utils import LoginMixn
 
 
@@ -172,3 +172,16 @@ class GroupCreateView(LoginMixn, CreateView):
         
         return  super().form_valid(form)
 
+class Support(LoginMixn, CreateView):
+    form_class = SupportForm
+    template_name = 'main/support.html'
+    extra_context = {'title': 'Support'}
+    
+    def get_success_url(self):
+        return reverse_lazy('home')
+    
+    def form_valid(self, form):
+        m = form.save(commit=False)
+        m.user = self.request.user
+        
+        return super().form_valid(form)

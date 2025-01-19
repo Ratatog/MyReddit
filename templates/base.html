@@ -125,6 +125,10 @@
                     </ul>
                 </li>
             <div class="sidebar-footer">
+                <a href="{% url "support" %}" class="sidebar-link">
+                    {% comment %} <img src="{% static "images/logout_btn.png" %}"> {% endcomment %}
+                    <span>Support</span>
+                </a>
                 <a href="{% url "users:logout" %}" class="sidebar-link">
                     <img src="{% static "images/logout_btn.png" %}">
                     <span>Logout</span>

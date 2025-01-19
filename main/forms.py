@@ -3,7 +3,7 @@ from django import forms
 from django.core.files.base import File
 from django.db.models.base import Model
 from django.forms.utils import ErrorList
-from .models import Comment, Group, Post
+from .models import Comment, Group, Post, Support
 
 
 class CommentForm(forms.ModelForm):
@@ -55,3 +55,10 @@ class SearcherFilterForm(forms.Form):
         brand_choices = kwargs.pop('brand_choices', [])
         super().__init__(*args, **kwargs)
         self.fields['brands'].choices = brand_choices
+
+class SupportForm(forms.ModelForm):
+    text = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control my-3 py-2 w-75', 'placeholder': 'Message'}))
+    
+    class Meta:
+        model = Support
+        fields = ['text']

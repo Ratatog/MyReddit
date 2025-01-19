@@ -19,4 +19,6 @@ urlpatterns = [
     
     path('group/join/<int:pk>/', views.JoinGroupView, name='join_group'),
     path('group/quit/<int:pk>/', views.QuitGroupView, name='quit_group'),
+    
+    path('support/', views.Support.as_view(), name='support'),
 ]

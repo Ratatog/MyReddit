@@ -70,3 +70,13 @@ class Notification(models.Model):
     
     def __str__(self):
         return self.text[:20]
+    
+class Support(models.Model):
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name='Пользователь', related_name='user')
+    text = models.CharField(max_length=300, verbose_name='Сообщение')
+    
+    class Meta:
+        ordering = ['-pk']
+        
+    def __str__(self):
+        return f'{self.user}: "{self.text[:10]}..."'
