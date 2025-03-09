@@ -206,11 +206,14 @@ class SupportAnswerView(LoginMixn, CreateView):
     template_name = 'main/sup_answer.html'
     pk_url_kwarg = 'pk'
     
+    def dispatch(self, request, *args, **kwargs):
+        self.u = get_user_model().objects.get(pk=self.kwargs[self.pk_url_kwarg])
+        return super().dispatch(request, *args, **kwargs)
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Answer'
-        u = get_user_model().objects.get(pk=self.kwargs[self.pk_url_kwarg])
-        context['messages'] = Support.objects.filter(user=u)
+        context['messages'] = Support.objects.filter(user=self.u)
         return context
     
     def get_success_url(self):
@@ -218,8 +221,7 @@ class SupportAnswerView(LoginMixn, CreateView):
     
     def form_valid(self, form):
         m = form.save(commit=False)
-        u = get_user_model().objects.get(pk=self.kwargs[self.pk_url_kwarg])
-        m.user = u
+        m.user = self.u
         m.moder = self.request.user
         
         

@@ -9,7 +9,7 @@
         {% if msg.moder == None %}
         <div class='sup_msg'>
             <div class='sup_msg_top'>
-                <a href="{% url "users:profile" msg.user.pk %}">
+                <a href="{% url "support_answer" msg.user.pk %}">
                     <img src="{{msg.user.avatar.url}}" width='30px'>
                     {{msg.user.username}}
                 </a>
