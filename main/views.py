@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from decouple import config
-from .models import Post, Image, Comment, Group, Notification
+from .models import Post, Image, Comment, Group, Notification, Support
 from .forms import CommentForm, AddPostForm, AddGroupForm, SearcherFilterForm, SupportForm
 from .utils import LoginMixn
 
@@ -84,6 +84,8 @@ searchbar = {
 }
 
 class Search(LoginMixn, ListView):
+    paginate_by = 3^5
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Search For ' + searchbar[self.request.GET['type']]['title']
@@ -172,16 +174,53 @@ class GroupCreateView(LoginMixn, CreateView):
         
         return  super().form_valid(form)
 
-class Support(LoginMixn, CreateView):
+class SupportView(LoginMixn, CreateView):
     form_class = SupportForm
     template_name = 'main/support.html'
-    extra_context = {'title': 'Support'}
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Support'
+        context['messages'] = Support.objects.filter(user=self.request.user)
+        return context
     
     def get_success_url(self):
-        return reverse_lazy('home')
+        return reverse_lazy('support')
     
     def form_valid(self, form):
         m = form.save(commit=False)
         m.user = self.request.user
+        
+        return super().form_valid(form)
+    
+class AdminSupportView(LoginMixn, ListView):
+    template_name = 'main/admin_sup.html'
+    context_object_name = 'messages'
+    extra_context = {'title': 'Messages'}
+    
+    def get_queryset(self):
+        return Support.objects.all()
+    
+class SupportAnswerView(LoginMixn, CreateView):
+    form_class = SupportForm
+    template_name = 'main/sup_answer.html'
+    pk_url_kwarg = 'pk'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Answer'
+        u = get_user_model().objects.get(pk=self.kwargs[self.pk_url_kwarg])
+        context['messages'] = Support.objects.filter(user=u)
+        return context
+    
+    def get_success_url(self):
+        return reverse_lazy('support_answer', args=(self.kwargs[self.pk_url_kwarg],))
+    
+    def form_valid(self, form):
+        m = form.save(commit=False)
+        u = get_user_model().objects.get(pk=self.kwargs[self.pk_url_kwarg])
+        m.user = u
+        m.moder = self.request.user
+        
         
         return super().form_valid(form)

@@ -72,8 +72,9 @@ class Notification(models.Model):
         return self.text[:20]
     
 class Support(models.Model):
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name='Пользователь', related_name='user')
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name='Пользователь', related_name='sup')
     text = models.CharField(max_length=300, verbose_name='Сообщение')
+    moder = models.ForeignKey('users.User', on_delete=models.CASCADE, default=None, null=True , verbose_name='Ответчик', related_name='sup_mod')
     
     class Meta:
         ordering = ['-pk']

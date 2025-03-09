@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="create">
+    <h1 class="text-white text-center my-5">{{title}}</h1>
+
+    <div id='sup_msgs'>
+        {% for msg in messages %}
+        {% if msg.moder == None %}
+        <div class='sup_msg'>
+            <div class='sup_msg_top'>
+                <a href="{% url "users:profile" msg.user.pk %}">
+                    <img src="{{msg.user.avatar.url}}" width='30px'>
+                    {{msg.user.username}}
+                </a>
+            </div>
+            <div class='sup_msg_text'>
+                {{msg.text}}
+            </div>
+            <hr>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

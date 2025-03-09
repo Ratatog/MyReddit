@@ -125,6 +125,12 @@
                     </ul>
                 </li>
             <div class="sidebar-footer">
+                {% if user.is_superuser %}
+                <a href="{% url "admin_support" %}" class="sidebar-link">
+                    {% comment %} <img src="{% static "images/logout_btn.png" %}"> {% endcomment %}
+                    <span>Admin support</span>
+                </a>
+                {% endif %}
                 <a href="{% url "support" %}" class="sidebar-link">
                     {% comment %} <img src="{% static "images/logout_btn.png" %}"> {% endcomment %}
                     <span>Support</span>
